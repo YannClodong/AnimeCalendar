@@ -21,7 +21,7 @@ public class Anime
         if (StartDate > DateTime.Now)
             return StartDate;
         
-        var nWeek = (int)((DateTime.Now - StartDate) / TimeSpan.FromDays(7));
-        return StartDate + (nWeek + 1) * TimeSpan.FromDays(7);
+        var nWeek = (int)((DateTime.Now.Date - StartDate + TimeSpan.FromHours(5)) / TimeSpan.FromDays(7));
+        return StartDate + (nWeek) * TimeSpan.FromDays(7);
     }
 }
