@@ -32,6 +32,7 @@ public class UserConfigurer : BackgroundService
             if (!result.Succeeded) return;
             
             await userManager.AddToRoleAsync(admin, ConstRoles.AdminRole);
+            await userManager.AddToRoleAsync(admin, ConstRoles.AnimeEditor);
         }
     }
 }
