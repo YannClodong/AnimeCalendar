@@ -4,3 +4,6 @@ obj/
 riderModule.iml
 /_ReSharper.Caches/
 AnimeCalendar/Secret.cs
+AnimeCalendar/app.db-wal
+AnimeCalendar/app.db
+AnimeCalendar/app.db-shm

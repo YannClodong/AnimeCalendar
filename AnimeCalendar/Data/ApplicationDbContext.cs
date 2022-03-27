@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AnimeCalendar.Data.Configurations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,14 +35,7 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole, string
             .WithMany(u => u.Collections)
             .IsRequired();
 
-        builder.Entity<IdentityRole>().HasData(new IdentityRole()
-        {
-            Name = "Administator",
-            NormalizedName = ConstRoles.AdminRole
-        }, new IdentityRole()
-        {
-            Name = "Anime Editor",
-            NormalizedName = ConstRoles.AnimeEditor
-        });
+
+        builder.ApplyConfiguration(new RoleConfig());
     }
 }
