@@ -1,0 +1,17 @@
+﻿
+<div class="w-100 position-fixed top-0 start-0" style="z-index: -10; height: 100vh; overflow: hidden">
+	<img src="@Image" alt="@Alt" class="img-fluid" style="width: 100%" />
+	<div class="position-fixed w-100 start-0 top-0 background-gradient" style="height: 100vh; z-index: 1">
+		
+	</div>
+</div>
+
+@code {
+
+	[Parameter]
+	public string Image { get; set; } = null!;
+
+	[Parameter]
+	public string Alt { get; set; } = null!;
+
+}

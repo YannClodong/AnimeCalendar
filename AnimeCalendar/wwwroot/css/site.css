@@ -1,4 +1,6 @@
 @import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import url('d-i.css');
+
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -142,4 +144,8 @@ a, .btn-link {
 .padding-gutter-x {
     padding-right: calc(var(--bs-gutter-x) * .5) !important;
     padding-left: calc(var(--bs-gutter-x) * .5) !important;
+}
+
+.background-gradient {
+    background: linear-gradient(rgba(var(--bs-dark-rgb), 0), rgba(var(--bs-dark-rgb), 1) 60%);
 }

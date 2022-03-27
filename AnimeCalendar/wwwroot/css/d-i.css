@@ -1,0 +1,35 @@
+﻿.d-0, .d-1, .d-2, .d-3, .d-4, .d-5, .d-6, .d-7, .d-8, .d-9, .d-10, .d-11 {
+    display: block;
+}
+
+
+/*// Small devices (landscape phones, 576px and up)*/
+@media (max-width: 576px) {
+    .d-3, .d-4, .d-5, .d-6, .d-7, .d-8, .d-9, .d-10, .d-11 {
+        display: none;
+    }
+}
+
+/*// Medium devices (tablets, 768px and up)*/
+@media (max-width: 768px) {
+    .d-4, .d-5, .d-6, .d-7, .d-8, .d-9, .d-10, .d-11 {
+        display: none;
+    }
+}
+
+/*// Large devices (desktops, 992px and up)*/
+@media (max-width: 992px) {
+    .d-6, .d-7, .d-8, .d-9, .d-10, .d-11 {
+        display: block;
+    }
+}
+
+/*// X-Large devices (large desktops, 1200px and up)*/
+@media (max-width: 1200px) {
+
+}
+
+/*// XX-Large devices (larger desktops, 1400px and up)*/
+@media (max-width: 1400px) {
+
+}
