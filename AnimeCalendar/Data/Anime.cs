@@ -15,7 +15,7 @@ public class Anime
 
     public DateTime GetNext()
     {
-        if(StartDate + (NumberEpisodes - 1) * TimeSpan.FromDays(7) < DateTime.Now)
+        if(StartDate + NumberEpisodes * TimeSpan.FromDays(7) < DateTime.Now)
             return DateTime.MaxValue;
 
         if (StartDate > DateTime.Now)
