@@ -8,14 +8,7 @@
 <div class="d-flex mb-3">
     <button class="btn btn-outline-danger" @onclick="Destroy">Destroy collection</button>
 </div>
-<div class="row">
-    @foreach (var anime in _collection.Elements.Select(e => e.Anime))
-    {
-        <a class="col-2" href="/animes/@anime.Id">
-            <img class="img-fluid cover" alt="@anime.Name" src="@anime.Cover" />
-        </a>
-    }
-</div>
+<AnimeGrid Animes="_collection.Elements.Select(e => e.Anime)"></AnimeGrid>
 
 
 @code {
