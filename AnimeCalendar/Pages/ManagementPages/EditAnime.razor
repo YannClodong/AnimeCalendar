@@ -1,0 +1,78 @@
+﻿@page "/animes/create";
+@page "/animes/{AnimeId:long}/edit";
+@using AnimeCalendar.Data
+@using AnimeCalendar.Work
+
+@inject ApplicationDbContext _dbContext
+@inject NavigationManager _navigationManager;
+
+<h1 class="display-4 mb-3">Edit anime page</h1>
+<EditForm EditContext="_context" OnValidSubmit="Submit">
+    <ValidationSummary></ValidationSummary>
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+    <div class="form-floating mb-3">
+        <InputText type="text" class="form-control bg-dark text-light" id="title" @bind-Value="_sandbox.Name" placeholder="TItle"/>
+        <label for="title">Title</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control bg-dark text-light" id="cover" @bind="_sandbox.Cover" placeholder="COver">
+        <label for="cover">Cover</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control bg-dark text-light" id="banner" @bind="_sandbox.Banner" placeholder="Banner">
+        <label for="cover">Banner</label>
+    </div>
+    <div class="form-floating mb-3">
+        <InputDate TValue="DateTime" class="form-control bg-dark text-light" id="startDate" @bind-Value="_sandbox.StartDate" placeholder="Stardate"/>
+        <label for="startDate">Start date</label>
+    </div>
+    <div class="form-floating mb-3">
+        <InputNumber TValue="int" type="email" class="form-control bg-dark text-light" @bind-Value="_sandbox.NumberEpisodes" id="numberEpisodes" placeholder="NumberEpisode"/>
+        <label for="numberEpisodes">Number of episodes</label>
+    </div>
+
+    <button
+        type="submit"
+        class="btn btn-primary btn-lg">
+        Submit
+    </button>
+</EditForm>
+
+
+@code {
+
+    [Parameter]
+    public long? AnimeId { get; set; }
+
+    private EditContext _context = null!;
+    private AnimeSandbox _sandbox = null!;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        if (AnimeId == null)
+            _sandbox = new CreateAnimeSandbox();
+        else
+        {
+            var anime = _dbContext.Animes.SingleOrDefault(a => a.Id == AnimeId);
+            if (anime == null)
+            {
+                _navigationManager.NavigateTo("/");
+                return;
+            }
+
+            _sandbox = new AnimeSandbox(anime);
+        }
+
+        _context = new EditContext(_sandbox);
+    }
+
+    private void Submit()
+    {
+        _sandbox.Save(_dbContext);
+        _dbContext.SaveChanges();
+    }
+
+}

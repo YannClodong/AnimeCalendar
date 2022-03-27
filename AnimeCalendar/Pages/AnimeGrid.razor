@@ -1,0 +1,26 @@
+﻿@using AnimeCalendar.Data
+
+<div class="row">
+    @foreach (var anime in Animes)
+    {
+        <div class="col-2">
+            <div class="anime-card">
+                <div class="anime-card-image-holder">
+                    <img class="anime-card-image cover" src="@anime.Cover" alt="@anime.Name"/>
+                </div>
+                <div class="anime-card-overlay">
+                    <a class="anime-card-body d-flex align-items-center justify-content-center" href="/animes/@anime.Id">
+                        <p class="text-light nolink" style="text-align: center">@anime.Name</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+
+    [Parameter]
+    public List<Anime> Animes { get; set; } = null!;
+
+}

@@ -1,0 +1,38 @@
+﻿@page "/collections/{CollectionId:long}"
+@using AnimeCalendar.Data
+@using AnimeCalendar.Services
+@inject CollectionService _collectionService;
+@inject NavigationManager _navigationManager;
+
+<h1 class="display-4 mb-3">@_collection.Name</h1>
+<div class="d-flex mb-3">
+    <button class="btn btn-outline-danger" @onclick="Destroy">Destroy collection</button>
+</div>
+<div class="row">
+    @foreach (var anime in _collection.Elements.Select(e => e.Anime))
+    {
+        <a class="col-2" href="/animes/@anime.Id">
+            <img class="img-fluid cover" alt="@anime.Name" src="@anime.Cover" />
+        </a>
+    }
+</div>
+
+
+@code {
+    private Collection _collection = null!;
+    
+    [Parameter]
+    public long CollectionId { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _collection = _collectionService.GetCollection(CollectionId);
+    }
+
+    private void Destroy()
+    {
+        _collectionService.Destroy(_collection.Id);
+        _navigationManager.NavigateTo("/collections");
+    }
+
+}

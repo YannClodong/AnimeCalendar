@@ -1,0 +1,62 @@
+﻿@inherits LayoutComponentBase
+
+@inject NavigationManager _navigationManager;
+
+<PageTitle>AnimeCalendar</PageTitle>
+
+<div class="page">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+		<div class="container-fluid">
+			<a class="navbar-brand" href="#">Calendar</a>
+			<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					<li class="nav-item">
+						<a class="nav-link @(CurrentPath == "" ? "active" : "")" aria-current="page" href="/">Home</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link @(CurrentPath == "animes" ? "active" : "")" href="/animes">Animes</a>
+					</li>
+					<li class="nav-item">
+						<AuthorizeView>
+							<Authorized>
+								<a class="nav-link @(CurrentPath == "collections" ? "active" : "")" href="/collections">Collections</a>
+							</Authorized>
+							<NotAuthorized>
+								<a class="nav-link disabled">Collections</a>
+							</NotAuthorized>
+						</AuthorizeView>
+					</li>
+				</ul>
+				<div class="d-flex">
+					<AuthorizeView>
+						<Authorized>
+							Hello @context.User.Identity?.Name, Click here to 
+							<form class="form-inline ms-1" action="/Identity/Account/Logout" method="post">
+								<button type="submit" class="btn btn-link linkish text-light">logout</button>
+							</form>
+						</Authorized>
+						<NotAuthorized>
+							<a class="btn btn-primary me-3" href="/Identity/Account/Login">Login</a>
+							<a class="btn btn-outline-primary" href="/Identity/Account/Register">Register</a>
+						</NotAuthorized>
+					</AuthorizeView>
+				</div>
+				@* <form class="d-flex"> *@
+				@*   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> *@
+				@*   <button class="btn btn-outline-success" type="submit">Search</button> *@
+				@* </form> *@
+			</div>
+		</div>
+	</nav>
+	<div class="container my-5">
+		@Body
+	</div>
+</div>
+
+@code
+{
+	private string CurrentPath => _navigationManager.ToBaseRelativePath(_navigationManager.Uri);
+}

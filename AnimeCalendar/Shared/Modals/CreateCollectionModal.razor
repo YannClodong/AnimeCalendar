@@ -1,0 +1,33 @@
+﻿@using AnimeCalendar.Services
+@using System.ComponentModel.DataAnnotations
+@using AnimeCalendar.Data
+
+@inject CollectionService _collectionService;
+
+@namespace AnimeCalendar.Shared.Modals
+
+@* <button style="border: none; background: transparent" type="button" data-bs-toggle="modal" data-bs-target="#createCollectionModalLabel"> *@
+@*   @ChildContent *@
+@* </button> *@
+
+
+
+
+@code {
+
+    private record CreateCollectionEditContext
+    {
+        [Required]
+        [MinLength(3)]
+        public string CollectionName { get; set; } = "";
+    }
+
+    private readonly CreateCollectionEditContext _model = new();
+    private readonly EditContext _context;
+
+    public CreateCollectionModal()
+    {
+        _context = new EditContext(_model);
+    }
+
+}

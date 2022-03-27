@@ -1,0 +1,18 @@
+﻿@page "/animes"
+@using AnimeCalendar.Data
+@using AnimeCalendar.Services
+@inject AnimeService _animeService;
+
+<h1 class="display-4 mb-3">Anime collection</h1>
+<AnimeGrid Animes="_animes"></AnimeGrid>
+
+@code {
+    private List<Anime> _animes = null!;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _animes = _animeService.GetAll();
+    }
+
+}

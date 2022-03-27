@@ -1,0 +1,14 @@
+﻿@inject NavigationManager _navigationManager;
+
+@code {
+
+	[Parameter]
+	public string Url { get; set; } = null!;
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		_navigationManager.NavigateTo(Url);
+	}
+
+}

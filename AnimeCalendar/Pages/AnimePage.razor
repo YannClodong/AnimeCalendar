@@ -1,0 +1,162 @@
+﻿@page "/animes/{AnimeId:long}";
+@using AnimeCalendar.Data
+@using AnimeCalendar.Services
+@using System.ComponentModel.DataAnnotations
+
+@inject ApplicationDbContext _dbContext;
+@inject NavigationManager _navigationManager;
+@inject CollectionService _collectionService;
+@inject AnimeService _animeService;
+
+<h1 class="display-4 mb-3">@_anime.Name</h1>
+
+<div class="row">
+    <div class="col-3">
+        <img class="img-fluid" src="@_anime.Cover" alt="cover of @_anime.Name"/>
+    </div>
+    <div class="col-9">
+        <h3 class="display-6 mb-3">Infos: </h3>
+        <div class="d-flex align-items-center">
+            <h6 class="h6 me-2">Release date: </h6> On @_anime.StartDate.DayOfWeek.ToString()
+        </div>
+        <h3 class="display-6 mb-3">Your collections: </h3>
+        <AuthorizeView>
+            <Authorized>
+                <ul class="list-group">
+                    @if (_collections.Count == 0)
+                    {
+                        <li class="list-group-item text-light">
+                            <div class="d-flex align-items-center">
+                                <div>You don't have any collection yet.</div>
+                            </div>
+                        </li>
+                    }
+                    @foreach (var collection in _collections)
+                    {
+                        <li class="list-group-item text-light">
+                            <div class="d-flex align-items-center">
+                                <div>@collection.collection.Name</div>
+                                <div style="flex: 1"></div>
+                                <div>
+                                    @if (collection.contains)
+                                    {
+                                        <button class="btn btn-outline-danger d-flex align-items-center" @onclick="() => RemoveToCollection(collection.collection)">
+                                            <i class="fa-solid fa-xmark"></i>
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button class="btn btn-outline-primary d-flex align-items-center" @onclick="() => AddToCollection(collection.collection)">
+                                            <span class="oi oi-plus"></span>
+                                        </button>
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                    }
+                    <button class="list-group-item text-light list-group-item-action d-flex align-items-center justify-content-center" type="button" data-bs-toggle="modal" data-bs-target="#createCollectionModal">
+                        <span class="oi oi-plus me-2"></span>Create new collection
+                    </button>
+                </ul>
+            </Authorized>
+            <NotAuthorized>
+                <p class="lead">Please login in order to manage your collections</p>
+                <a class="btn btn-primary" href="/Identity/Account/Login">Login</a>
+            </NotAuthorized>
+        </AuthorizeView>
+    </div>
+</div>
+
+<div class="modal fade" id="createCollectionModal" tabindex="-1" aria-labelledby="createCollectionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <EditForm EditContext="_context" OnValidSubmit="CreateCollection">
+            <ValidationSummary></ValidationSummary>
+            <DataAnnotationsValidator></DataAnnotationsValidator>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h3 class="h3 mb-3">You are creating a collection containing following anime: </h3>
+                    <ul class="list-group mb-3">
+                        <li class="list-group-item text-light">@_anime.Name</li>
+                    </ul>
+
+
+                    <div class="form-floating mb-3">
+                        <InputText type="text" class="form-control bg-dark text-light"
+                                   id="collectionNameInput" @bind-Value="_model.CollectionName"
+                                   placeholder="collection">
+                        </InputText>
+                        <label for="collectionNameInput">Collection name</label>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer" OnValidSubmit="CreateCollection">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" data-bs-dismiss="modal" class="btn btn-primary">Create collection</button>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+
+@code {
+
+    [Parameter]
+    public long AnimeId { get; set; }
+
+    private Anime _anime = null!;
+    private List<(Collection collection, bool contains)> _collections = new();
+
+    private record CreateCollectionEditContext
+    {
+        [Required]
+        [MinLength(3)]
+        public string CollectionName { get; set; } = "";
+    }
+
+    private readonly CreateCollectionEditContext _model = new();
+    private readonly EditContext _context;
+
+    public AnimePage()
+    {
+        _context = new EditContext(_model);
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Refresh();
+    }
+
+    private void Refresh()
+    {
+        var result = _animeService.GetAnimeWithUserCollection(AnimeId);
+        _anime = result.anime;
+        _collections = result.collections;
+    }
+
+    private void AddToCollection(Collection collection)
+    {
+        _collectionService.AddAnime(collection, _anime);
+        Refresh();
+    }
+
+    private void RemoveToCollection(Collection collection)
+    {
+        _collectionService.RemoveAnime(collection, _anime);
+        Refresh();
+    }
+
+    private void CreateCollection()
+    {
+        _collectionService.CreateCollection(_model.CollectionName, new List<Anime>() {_anime});
+        Refresh();
+    }
+
+}

@@ -1,0 +1,46 @@
+﻿@page "/collections"
+@using AnimeCalendar.Data
+@using AnimeCalendar.Services
+@inject CollectionService _collectionService;
+
+<AuthorizeView>
+	<Authorized>
+		<h1 class="display-4 mb-3">Collections</h1>
+		<div class="list-group">
+			@if (_collections.Count == 0)
+			{
+				<div class="list-group-item text-light">
+					You don't have any collection yet. You can create one by going to a interesting anime and create a new collection.
+				</div>
+			}
+			@foreach (var collection in _collections)
+			{
+				<a class="list-group-item list-group-item-action" aria-current="true" href="/collections/@collection.Id">
+					<h4 class="mb-2">@collection.Name</h4>
+					<div class="row" style="--bs-gutter-x: .7rem">
+						@foreach (var anime in collection.Elements.Select(e => e.Anime).Take(12))
+						{
+							<div class="col-1 padding-gutter-x">
+								<img class="img-fluid cover" src="@anime.Cover" alt="@anime.Name"/>
+							</div>
+						}
+					</div>
+				</a>
+			}
+		</div>
+	</Authorized>
+	<NotAuthorized>
+		<Redirect Url="/" />
+	</NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+	private List<Collection> _collections = null!;
+
+	protected override void OnInitialized()
+	{
+		_collections = _collectionService.GetCollections();
+	}
+
+}
