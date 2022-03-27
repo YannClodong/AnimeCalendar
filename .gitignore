@@ -7,3 +7,6 @@ AnimeCalendar/Secret.cs
 AnimeCalendar/app.db-wal
 AnimeCalendar/app.db
 AnimeCalendar/app.db-shm
+*.db
+*.db-shm
+*.db-wal
