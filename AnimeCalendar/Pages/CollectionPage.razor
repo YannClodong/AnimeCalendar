@@ -19,7 +19,14 @@
 
     protected override void OnInitialized()
     {
-        _collection = _collectionService.GetCollection(CollectionId);
+        try
+        {
+            _collection = _collectionService.GetCollection(CollectionId);
+        }
+        catch
+        {
+            _navigationManager.NavigateTo("/collections");
+        }
     }
 
     private void Destroy()
