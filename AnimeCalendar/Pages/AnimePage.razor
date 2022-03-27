@@ -9,6 +9,14 @@
 @inject AnimeService _animeService;
 
 <h1 class="display-4 mb-3">@_anime.Name</h1>
+<AuthorizeView Roles="@ConstRoles.AnimeEditor">
+    <Authorized>
+        <div class="d-flex">
+            <a class="btn btn-outline-primary me-3" href="/animes/@_anime.Id/edit">Edit</a>
+            <a class="btn btn-outline-danger" href="/animes/@_anime.Id/edit">Delete</a>
+        </div>
+    </Authorized>
+</AuthorizeView>
 
 <div class="row">
     <div class="col-3">

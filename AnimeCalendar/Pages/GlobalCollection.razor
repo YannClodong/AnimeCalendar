@@ -3,6 +3,11 @@
 @using AnimeCalendar.Services
 @inject AnimeService _animeService;
 
+<AuthorizeView Roles="@ConstRoles.AnimeEditor">
+    <div class="d-flex">
+        <a class="btn btn-outline-primary" href="/animes/create">Create anime</a>
+    </div>
+</AuthorizeView>
 <h1 class="display-4 mb-3">Anime collection</h1>
 <AnimeGrid Animes="_animes"></AnimeGrid>
 
