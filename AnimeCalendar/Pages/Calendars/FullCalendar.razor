@@ -1,0 +1,16 @@
+﻿@page "/calendar"
+@using AnimeCalendar.Data
+@using AnimeCalendar.Services
+@inject AnimeService _animeService;
+
+<Calendar Animes="_animes"></Calendar>
+
+@code {
+	private List<Anime> _animes = null!;
+	
+	protected override void OnInitialized()
+	{
+		_animes = _animeService.GetAll();
+	}
+
+}

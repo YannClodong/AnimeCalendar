@@ -1,0 +1,20 @@
+﻿@using AnimeCalendar.Data
+
+<div class="list-group">
+	@foreach (var dow in Enum.GetValues<DayOfWeek>())
+	{
+		<AnimeCollectionListElement
+			Title="@dow.ToString()"
+			Animes="Animes.Where(a => a.StartDate.DayOfWeek == dow)"
+			Link="/">
+		</AnimeCollectionListElement>
+	}
+</div>
+
+
+@code {
+
+	[Parameter]
+	public IEnumerable<Anime> Animes { get; set; } = null!;
+
+}
