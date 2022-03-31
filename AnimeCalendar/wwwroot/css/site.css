@@ -4,6 +4,16 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --cover-aspect-ratio: 400 / 600;
+    --banner-aspect-ratio: 1280 / 300;
+}
+
+body:has(> .backdrop) {
+    overflow-y: hidden;
+    height: 100vh;
+}
+
+.backdrop {
 }
 
 h1:focus {
@@ -137,7 +147,7 @@ a, .btn-link {
 }
 
 .cover {
-    aspect-ratio: 400 / 600;
+    aspect-ratio: var(--cover-aspect-ratio);
     object-fit: cover;
 }
 
@@ -148,4 +158,12 @@ a, .btn-link {
 
 .background-gradient {
     background: linear-gradient(rgba(var(--bs-dark-rgb), 0), rgba(var(--bs-dark-rgb), 1) 60%);
+}
+
+.cover-aspect-ratio {
+    aspect-ratio: var(--cover-aspect-ratio);
+}
+
+.banner-aspect-ratio {
+    aspect-ratio: var(--banner-aspect-ratio);
 }
