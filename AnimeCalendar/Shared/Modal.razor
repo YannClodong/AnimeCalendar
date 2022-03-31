@@ -1,0 +1,58 @@
+﻿@if (_show)
+{
+	<div class="modal fade backdrop @(_showClass ? "show" : "")" id="exampleModalLong" tabindex="-1" style="display: block; overflow-y: auto">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">@Title</h5>
+					<button type="button" class="btn-close" @onclick="Dismiss"></button>
+				</div>
+				<div class="modal-body">
+					@Body
+				</div>
+				@if (Footer != null)
+				{
+					<div class="modal-footer">
+						@Footer
+					</div>
+				}
+			</div>
+		</div>
+	</div>
+	<div class="modal-backdrop fade @(_showClass ? "show" : "")"></div>
+}
+
+@code {
+	private bool _show = false;
+	private bool _showClass = false;
+
+	[Parameter]
+	public string Title { get; set; } = null!;
+
+	[Parameter]
+	public RenderFragment Body { get; set; } = null!;
+
+	[Parameter]
+	public RenderFragment? Footer { get; set; }
+
+	public void Show()
+	{
+		_show = true;
+		Task.Delay(10).ContinueWith(_ =>
+		{
+			_showClass = true;
+			InvokeAsync(StateHasChanged);
+		});
+	}
+
+	public void Dismiss()
+	{
+		_showClass = false;
+		Task.Delay(10).ContinueWith(_ =>
+		{
+			_show = false;
+			InvokeAsync(StateHasChanged);
+		});
+	}
+
+}

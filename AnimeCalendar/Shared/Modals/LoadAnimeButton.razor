@@ -1,0 +1,92 @@
+﻿@using AnimeCalendar.Work
+@using AnimeCalendar.Services
+
+@namespace AnimeCalendar.Shared.Modals
+
+@inject AniListService _aniListService;
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" @onclick="() => _modal?.Show()">
+  Load from AniList
+</button>
+
+<!-- Modal -->
+<Modal @ref="_modal" Title="Load from AniList">
+	<Body>
+	<label for="search-field">Searched anime: </label>
+	<div class="input-group mb-3">
+		<input id="search-field" type="text" class="form-control" placeholder="Kimetsu no yaiba..."
+		       @oninput="@(v => _query = v.Value?.ToString() ?? "")">
+		<button class="btn btn-primary btn-group d-flex align-items-center justify-content-center" @onclick="Search">
+			<i class="fa-solid fa-magnifying-glass"></i>
+		</button>
+	</div>
+	@if (_message != null)
+	{
+		<div class="alert alert-@_messageType" role="alert">
+			@_message
+		</div>
+	}
+
+	<div>
+		<ul class="list-group">
+			@foreach (var anime in _animeSandboxes)
+			{
+				<button class="list-group-item list-group-item-action text-light p-0" @onclick="() => SelectAnime(anime)">
+					<div class="row m-0">
+						<div class="col-2 p-1">
+							<img class="img-fluid rounded" src="@anime.Cover" alt="@anime.Name"/>	
+						</div>
+						<div class="col-10 p-1">
+							@anime.Name
+						</div>
+					</div>
+				</button>
+			}
+		</ul>
+	</div>
+	</Body>
+</Modal>
+
+@code {
+	[Parameter]
+	public EventCallback<AnimeSandbox> AnimeSelected { get; set; } = EventCallback<AnimeSandbox>.Empty;
+
+	private string _query = "";
+	
+	private string _messageType = "danger";
+	private string? _message;
+	
+	private Modal? _modal;
+
+	private List<AnimeSandbox> _animeSandboxes = new();
+
+	public void Search()
+	{
+		_aniListService.Search(_query).ContinueWith(r =>
+		{
+			if (!r.IsCompletedSuccessfully)
+			{
+				_messageType = "danger";
+				_message = "An error occured";
+			}
+			else
+			{
+				_animeSandboxes = r.Result;
+				if (r.Result.Count == 0)
+				{
+					_messageType = "info";
+					_message = "Nothing found.";
+				}
+			}
+			InvokeAsync(StateHasChanged);
+		});
+	}
+
+	private void SelectAnime(AnimeSandbox animeSandbox)
+	{
+		AnimeSelected.InvokeAsync(animeSandbox);
+		_modal?.Dismiss();
+	}
+
+}

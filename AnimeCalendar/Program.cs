@@ -20,10 +20,13 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services
     .AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<User>>();
+
+builder.Services.AddHttpClient();
 builder.Services.AddScoped<HttpContextAccessor>();
 
 builder.Services.AddHostedService<UserConfigurer>();
 
+builder.Services.AddScoped<AniListService>();
 builder.Services.AddScoped<CollectionService>();
 builder.Services.AddScoped<AnimeService>();
 

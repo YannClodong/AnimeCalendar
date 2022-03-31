@@ -2,6 +2,7 @@
 @page "/animes/{AnimeId:long}/edit";
 @using AnimeCalendar.Data
 @using AnimeCalendar.Work
+@using AnimeCalendar.Shared.Modals
 
 @inject ApplicationDbContext _dbContext
 @inject NavigationManager _navigationManager;
@@ -9,6 +10,10 @@
 <AuthorizeView Roles="@ConstRoles.AnimeEditor" Context="authContext">
     <Authorized>
         <h1 class="display-4 mb-3">Edit anime page</h1>
+        <div class="d-flex mb-3">
+            <LoadAnimeButton AnimeSelected="a => a.CopyTo(_sandbox)"></LoadAnimeButton>
+        </div>
+        
         <EditForm EditContext="_context" OnValidSubmit="Submit">
             <ValidationSummary></ValidationSummary>
             <DataAnnotationsValidator></DataAnnotationsValidator>

@@ -9,8 +9,8 @@ public class AnimeSandbox : Anime
     [Required] public sealed override string Name { get; set; }
     [Required] public sealed override string Cover { get; set; }
     [Required] public sealed override string Banner { get; set; }
-    [Required] public sealed override int NumberEpisodes { get; set; } = 13;
-    [Required] public sealed override DateTime StartDate { get; set; } = DateTime.Now;
+    [Required] public sealed override int NumberEpisodes { get; set; }
+    [Required] public sealed override DateTime StartDate { get; set; }
 
     protected Anime Target { get; }
 
@@ -24,12 +24,27 @@ public class AnimeSandbox : Anime
         NumberEpisodes = target.NumberEpisodes;
     }
 
+    public AnimeSandbox(string name, string? cover, string? banner, DateTime? startDate, int? numberEpisodes)
+    {
+        Name = name;
+        Cover = cover ?? "";
+        Banner = banner ?? "";
+        StartDate = startDate ?? DateTime.Now;
+        NumberEpisodes = numberEpisodes ?? 12;
+        Target = new Anime();
+    }
+
     public virtual void Save(ApplicationDbContext dbContext)
     {
-        Target.Name = Name;
-        Target.Cover = Cover;
-        Target.Banner = Banner;
-        Target.StartDate = StartDate;
-        Target.NumberEpisodes = NumberEpisodes;
+        CopyTo(Target);
+    }
+
+    public void CopyTo(Anime target)
+    {
+        target.Name = Name;
+        target.Cover = Cover;
+        target.Banner = Banner;
+        target.StartDate = StartDate;
+        target.NumberEpisodes = NumberEpisodes;
     }
 }
