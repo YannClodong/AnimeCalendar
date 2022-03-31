@@ -1,0 +1,29 @@
+﻿@page "/collections/{CollectionId:long}/calendar"
+@using AnimeCalendar.Data
+@using AnimeCalendar.Services
+@inject CollectionService _collectionService;
+
+<AuthorizeView>
+	<Authorized>
+		<h1 class="display-4">@_collection.Name</h1>
+		<Calendar Animes="_animes"></Calendar>
+	</Authorized>
+	<NotAuthorized>
+		<Redirect href="/collections"></Redirect>
+	</NotAuthorized>
+</AuthorizeView>
+
+
+@code {
+	[Parameter]
+	public long CollectionId { get; set; }
+
+	private Collection _collection { get; set; }
+	private IEnumerable<Anime> _animes => _collection.Elements.Select(e => e.Anime);
+
+	protected override void OnInitialized()
+	{
+		_collection = _collectionService.GetCollection(CollectionId);
+	}
+
+}

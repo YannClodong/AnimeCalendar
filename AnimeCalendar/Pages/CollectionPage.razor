@@ -4,7 +4,10 @@
 @inject CollectionService _collectionService;
 @inject NavigationManager _navigationManager;
 
-<h1 class="display-4 mb-3">@_collection.Name</h1>
+<div class="d-flex align-items-end mb-3">
+    <h1 class="display-4 m-0">@_collection.Name</h1>
+    <a href="/collections/@CollectionId/calendar" class="ms-2 mb-2">Calendar</a>
+</div>
 <div class="d-flex mb-3">
     <button class="btn btn-outline-danger" @onclick="Destroy">Destroy collection</button>
 </div>
