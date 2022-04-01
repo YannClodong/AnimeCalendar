@@ -2,6 +2,7 @@
 @using AnimeCalendar.Data
 @using AnimeCalendar.Services
 @inject CollectionService _collectionService;
+@inject RouteService _routeService;
 
 <AuthorizeView>
 	<Authorized>
@@ -18,12 +19,12 @@
 				<AnimeCollectionListElement 
 					Title="@collection.Name"
 					Animes="collection.Elements.Select(e => e.Anime)"
-				 	Link="@("/collections/" + collection.Id)"></AnimeCollectionListElement>
+				 	Link="@_routeService.GetCollection(collection.Id)"></AnimeCollectionListElement>
 			} 
 		</div>
 	</Authorized>
 	<NotAuthorized>
-		<Redirect Url="/" />
+		<Redirect Url="@_routeService.GetHome()" />
 	</NotAuthorized>
 </AuthorizeView>
 

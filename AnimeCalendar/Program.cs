@@ -26,6 +26,8 @@ builder.Services.AddScoped<HttpContextAccessor>();
 
 builder.Services.AddHostedService<UserConfigurer>();
 
+builder.Services.AddScoped<RouteService>();
+
 builder.Services.AddScoped<AniListService>();
 builder.Services.AddScoped<CollectionService>();
 builder.Services.AddScoped<AnimeService>();

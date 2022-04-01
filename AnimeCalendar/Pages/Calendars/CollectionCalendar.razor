@@ -2,6 +2,7 @@
 @using AnimeCalendar.Data
 @using AnimeCalendar.Services
 @inject CollectionService _collectionService;
+@inject RouteService _routeService;
 
 <AuthorizeView>
 	<Authorized>
@@ -9,7 +10,7 @@
 		<Calendar Animes="_animes"></Calendar>
 	</Authorized>
 	<NotAuthorized>
-		<Redirect href="/collections"></Redirect>
+		<Redirect href="@_routeService.GetCollectionsList()"></Redirect>
 	</NotAuthorized>
 </AuthorizeView>
 

@@ -4,15 +4,15 @@
 @using System.ComponentModel.DataAnnotations
 
 @inject ApplicationDbContext _dbContext;
-@inject NavigationManager _navigationManager;
 @inject CollectionService _collectionService;
+@inject RouteService _routeService;
 @inject AnimeService _animeService;
 
 <AuthorizeView Roles="@ConstRoles.AnimeEditor">
     <Authorized>
         <div class="d-flex">
-            <a class="btn btn-outline-primary me-3" href="/animes/@_anime.Id/edit">Edit</a>
-            <a class="btn btn-outline-danger" href="/animes/@_anime.Id/edit">Delete</a>
+            <a class="btn btn-outline-primary me-3" href="@_routeService.GetAnimeEdit(_anime.Id)">Edit</a>
+            <a class="btn btn-outline-danger" href="@_routeService.GetAnimeEdit(_anime.Id)">Delete</a>
         </div>
     </Authorized>
 </AuthorizeView>
@@ -72,7 +72,7 @@
             </Authorized>
             <NotAuthorized>
                 <p class="lead">Please login in order to manage your collections</p>
-                <a class="btn btn-primary" href="/Identity/Account/Login">Login</a>
+                <a class="btn btn-primary" href="@_routeService.GetLogin()">Login</a>
             </NotAuthorized>
         </AuthorizeView>
     </div>

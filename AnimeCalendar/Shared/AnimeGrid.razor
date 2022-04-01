@@ -1,4 +1,6 @@
 ﻿@using AnimeCalendar.Data
+@using AnimeCalendar.Services
+@inject RouteService _routeService;
 
 <div class="row" style="--bs-gutter-x: .7rem; --bs-gutter-y: 1rem;">
     @foreach (var anime in Animes)
@@ -9,7 +11,7 @@
                     <img class="anime-card-image cover" src="@anime.Cover" alt="@anime.Name"/>
                 </div>
                 <div class="anime-card-overlay">
-                    <a class="anime-card-body d-flex align-items-center justify-content-center" href="/animes/@anime.Id">
+                    <a class="anime-card-body d-flex align-items-center justify-content-center" href="@_routeService.GetAnime(anime.Id)">
                         <p class="text-light nolink" style="text-align: center">@anime.Name</p>
                     </a>
                 </div>

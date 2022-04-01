@@ -1,11 +1,12 @@
 ﻿@page "/animes/create";
 @page "/animes/{AnimeId:long}/edit";
 @using AnimeCalendar.Data
+@using AnimeCalendar.Services
 @using AnimeCalendar.Work
 @using AnimeCalendar.Shared.Modals
 
 @inject ApplicationDbContext _dbContext
-@inject NavigationManager _navigationManager;
+@inject RouteService _routeService;
 
 <AuthorizeView Roles="@ConstRoles.AnimeEditor" Context="authContext">
     <Authorized>
@@ -72,7 +73,7 @@
             var anime = _dbContext.Animes.SingleOrDefault(a => a.Id == AnimeId);
             if (anime == null)
             {
-                _navigationManager.NavigateTo("/");
+                _routeService.GetHome().Navigate();
                 return;
             }
 
@@ -86,7 +87,7 @@
     {
         _sandbox.Save(_dbContext);
         _dbContext.SaveChanges();
-        _navigationManager.NavigateTo("/animes");
+        _routeService.GetAnimeList().Navigate();
     }
 
 }

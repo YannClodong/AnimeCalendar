@@ -1,14 +1,13 @@
-﻿@inject NavigationManager _navigationManager;
+﻿@using AnimeCalendar.Work
 
 @code {
 
 	[Parameter]
-	public string Url { get; set; } = null!;
+	public MyRoute Url { get; set; } = null!;
 
 	protected override void OnInitialized()
 	{
-		base.OnInitialized();
-		_navigationManager.NavigateTo(Url);
+		Url.Navigate();
 	}
 
 }

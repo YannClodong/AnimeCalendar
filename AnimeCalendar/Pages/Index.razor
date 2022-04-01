@@ -2,6 +2,7 @@
 @using AnimeCalendar.Services
 @using AnimeCalendar.Data
 @inject AnimeService _animeService;
+@inject RouteService _routeService;
 
 <div class="mb-4 bg-dark rounded-3">
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel" style="height: 200px">
@@ -30,7 +31,7 @@
     <div class="container-fluid p-4">
         <h1 class="display-5 fw-bold">Simulcast calendar</h1>
         <p class="">Find here the release date of your favorites series.</p>
-        <a class="btn btn-primary btn-lg" type="button" href="/animes">Explore the collection</a>
+        <a class="btn btn-primary btn-lg" type="button" href="@_routeService.GetAnimeList()">Explore the collection</a>
     </div>
 </div>
 

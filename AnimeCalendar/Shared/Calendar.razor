@@ -1,4 +1,6 @@
 ﻿@using AnimeCalendar.Data
+@using AnimeCalendar.Services
+@inject RouteService _routeService;
 
 <div class="list-group">
 	@foreach (var dow in Enum.GetValues<DayOfWeek>())
@@ -6,7 +8,7 @@
 		<AnimeCollectionListElement
 			Title="@dow.ToString()"
 			Animes="Animes.Where(a => a.StartDate.DayOfWeek == dow)"
-			Link="/">
+			Link="@_routeService.GetHome()">
 		</AnimeCollectionListElement>
 	}
 </div>

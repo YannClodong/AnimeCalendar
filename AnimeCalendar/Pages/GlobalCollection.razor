@@ -2,15 +2,16 @@
 @using AnimeCalendar.Data
 @using AnimeCalendar.Services
 @inject AnimeService _animeService;
+@inject RouteService _routeService;
 
 <AuthorizeView Roles="@ConstRoles.AnimeEditor">
     <div class="d-flex">
-        <a class="btn btn-outline-primary" href="/animes/create">Create anime</a>
+        <a class="btn btn-outline-primary" href="@_routeService.GetCreateAnime()">Create anime</a>
     </div>
 </AuthorizeView>
 <div class="d-flex align-items-end mb-3">
     <h1 class="display-4 m-0">Anime collection</h1>
-    <a href="/calendar" class="ms-2 mb-2">Calendar</a>
+    <a href="@_routeService.GetFullCalendar()" class="ms-2 mb-2">Calendar</a>
 </div>
 <AnimeGrid Animes="_animes"></AnimeGrid>
 
