@@ -2,10 +2,11 @@
 
 public class Anime
 {
+    // ReSharper disable once UnusedAutoPropertyAccessor.Global
     public virtual long Id { get; set; }
-    public virtual string Name { get; set; }
-    public virtual string Cover { get; set; }
-    public virtual string Banner { get; set; }
+    public virtual string Name { get; set; } = null!;
+    public virtual string Cover { get; set; } = null!;
+    public virtual string Banner { get; set; } = null!;
     
     public virtual DateTime StartDate { get; set; }
     public virtual int NumberEpisodes { get; set; }

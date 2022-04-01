@@ -8,7 +8,7 @@
 @inject ApplicationDbContext _dbContext
 @inject RouteService _routeService;
 
-<AuthorizeView Roles="@ConstRoles.AnimeEditor" Context="authContext">
+<AuthorizeView Roles="@ConstRoles.AnimeEditor" Context="_">
     <Authorized>
         <h1 class="display-4 mb-3">Edit anime page</h1>
         <div class="d-flex mb-3">
@@ -20,11 +20,11 @@
             <DataAnnotationsValidator></DataAnnotationsValidator>
         
             <div class="form-floating mb-3">
-                <InputText type="text" class="form-control bg-dark text-light" id="title" @bind-Value="_sandbox.Name" placeholder="TItle"/>
+                <InputText type="text" class="form-control bg-dark text-light" id="title" @bind-Value="_sandbox.Name" placeholder="Title"/>
                 <label for="title">Title</label>
             </div>
             <div class="form-floating mb-3">
-                <input type="text" class="form-control bg-dark text-light" id="cover" @bind="_sandbox.Cover" placeholder="COver">
+                <input type="text" class="form-control bg-dark text-light" id="cover" @bind="_sandbox.Cover" placeholder="Cover">
                 <label for="cover">Cover</label>
             </div>
             <div class="form-floating mb-3">
@@ -32,7 +32,7 @@
                 <label for="cover">Banner</label>
             </div>
             <div class="form-floating mb-3">
-                <InputDate TValue="DateTime" class="form-control bg-dark text-light" id="startDate" @bind-Value="_sandbox.StartDate" placeholder="Stardate"/>
+                <InputDate TValue="DateTime" class="form-control bg-dark text-light" id="startDate" @bind-Value="_sandbox.StartDate" placeholder="Start date"/>
                 <label for="startDate">Start date</label>
             </div>
             <div class="form-floating mb-3">

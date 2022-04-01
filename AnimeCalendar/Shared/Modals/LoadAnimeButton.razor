@@ -61,7 +61,7 @@
 
 	private List<AnimeSandbox> _animeSandboxes = new();
 
-	public void Search()
+	private void Search()
 	{
 		_aniListService.Search(_query).ContinueWith(r =>
 		{

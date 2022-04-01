@@ -6,7 +6,7 @@ namespace AnimeCalendar.Data.Configurations;
 
 public class RoleConfig : IEntityTypeConfiguration<IdentityRole>
 {
-    public const string AdminRoleId = "68663419-0275-4322-9255-26cd1c116ab4";
+    private const string AdminRoleId = "68663419-0275-4322-9255-26cd1c116ab4";
     
     public void Configure(EntityTypeBuilder<IdentityRole> builder)
     {

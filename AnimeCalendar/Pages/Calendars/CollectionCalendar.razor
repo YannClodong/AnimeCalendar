@@ -7,7 +7,7 @@
 <AuthorizeView>
 	<Authorized>
 		<h1 class="display-4">@_collection.Name</h1>
-		<Calendar Animes="_animes"></Calendar>
+		<Calendar Animes="Animes"></Calendar>
 	</Authorized>
 	<NotAuthorized>
 		<Redirect href="@_routeService.GetCollectionsList()"></Redirect>
@@ -19,8 +19,8 @@
 	[Parameter]
 	public long CollectionId { get; set; }
 
-	private Collection _collection { get; set; }
-	private IEnumerable<Anime> _animes => _collection.Elements.Select(e => e.Anime);
+	private Collection _collection = null!;
+	private IEnumerable<Anime> Animes => _collection.Elements.Select(e => e.Anime);
 
 	protected override void OnInitialized()
 	{
