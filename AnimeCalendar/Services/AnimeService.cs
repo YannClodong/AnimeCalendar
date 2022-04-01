@@ -48,4 +48,12 @@ public class AnimeService
     {
         return _db.Animes.ToArray().OrderBy(a => a.GetNext()).ToList();
     }
+
+    public List<Anime> AiringAnimes()
+    {
+        return _db.Animes
+            .ToArray()
+            .Where(a => a.StartDate + a.NumberEpisodes * TimeSpan.FromDays(7) > DateTime.Now - TimeSpan.FromDays(1))
+            .ToList();
+    }
 }
